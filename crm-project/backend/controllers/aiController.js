@@ -2,15 +2,20 @@ import OpenAI from "openai";
 import Lead from "../models/Lead.js";
 import Contact from "../models/Contact.js";
 
-const MODEL = "gpt-4o-mini";
+const MODEL = "llama-3.3-70b-versatile";
 
 let openaiClient = null;
 const getOpenAI = () => {
   if (!process.env.OPENAI_API_KEY) {
-    throw new Error("OPENAI_API_KEY is not set. Add it to backend/.env and restart the server.");
+    throw new Error(
+      "OPENAI_API_KEY is not set. Add it to backend/.env and restart the server.",
+    );
   }
   if (!openaiClient) {
-    openaiClient = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    openaiClient = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+      baseURL: "https://api.groq.com/openai/v1",
+    });
   }
   return openaiClient;
 };
